@@ -14,10 +14,9 @@ package com.nawf.client;
 *  limitations under the License.
 */
 public class Message implements Jsonable{
-
-	private String id = null;
 	private String message = null;
 	private Level level = null;
+	private String fieldName = null;
 
 	public enum Level {Info, Warning, Error, System}
 
@@ -28,16 +27,19 @@ public class Message implements Jsonable{
 	
 	public Message(Level level, String message, String id){
 		this(level, message);
-		this.id = id;
+	}
+	
+	public void setFieldName(String fieldName){
+		this.fieldName = fieldName;
 	}
 
 	public String toJson(){
 		StringBuilder sb = new StringBuilder();
 		sb.append("{")
-		  .append("\"id\"")
+		  .append("\"fieldName\"")
 		  .append(":")
 		  .append("\"")
-		  .append(this.id)
+		  .append(this.fieldName)
 		  .append("\",")
 		  .append("\"level\"")
 		  .append(":")
@@ -51,9 +53,5 @@ public class Message implements Jsonable{
 		  .append("\"")
 		  .append("}");
 		return sb.toString();
-	}
-	
-	public String getId(){
-		return this.id;
 	}
 }

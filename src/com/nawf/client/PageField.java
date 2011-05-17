@@ -44,7 +44,11 @@ public class PageField<T>{
 	}
 	
 	public List<Message> validate(){
-		return field.validate(value);
+		return this.validate(false);
+	}
+	
+	public List<Message> validate(Boolean override){
+		return this.field.validate(this.value, override);
 	}
 	
 	public String getId(){

@@ -55,12 +55,16 @@ public class DomObject {
 	public final List<String> validateState(){
 		return new ArrayList<String>();
 	}
-
+	
 	public final List<Message> setField(DomField<?> field, String value) throws FieldNotFoundException{
+		return setField(field, value, false);
+	}
+
+	public final List<Message> setField(DomField<?> field, String value, Boolean overrideValidation) throws FieldNotFoundException{
 		if(this.fieldByName.containsValue(field)){
 			List<Message> messages = new ArrayList<Message>();
 			try{
-				messages.addAll(field.validate(value));
+				messages.addAll(field.validate(value, overrideValidation));
 				if(messages.isEmpty()){
 					field.setValue(value);
 				}

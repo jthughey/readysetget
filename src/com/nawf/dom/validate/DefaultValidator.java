@@ -22,7 +22,7 @@ public final class DefaultValidator<T> implements Validator<T>{
 	public DefaultValidator(){}
 
 	@Override
-	public final void validate(List<Message> errors, T value) throws FieldValidationException {
+	public final void validate(List<Message> errors, T value, Boolean overriden) throws FieldValidationException {
 		//Do nothing...
 	}
 }

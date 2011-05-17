@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
+
 import com.nawf.client.Message;
 import com.nawf.dom.DomField;
 import com.nawf.dom.FieldExistsException;
@@ -25,32 +28,38 @@ import com.nawf.dom.format.IntegerFormatter;
 import com.nawf.dom.parse.IntegerParser;
 
 public class Test {
-
+	static Logger logger = Logger.getLogger(Test.class);
 	public static void main(String[] args) {
+		DOMConfigurator.configure("log4j.xml");
+
 		List<Message> messages = new ArrayList<Message>();
 		Client client = null;
 		try{
 			client = new Client("Justin", 29, new Date(System.currentTimeMillis()));
-			System.out.println(client);
+			logger.info(client);
 			messages.addAll(client.setField(client.getField("birthDate"), "12/07/1981"));
 			messages.addAll(client.setField(client.getField("birthDate"), "1a/07/1981"));
 			messages.addAll(client.setField(client.getField("birthDate"), "12/07/2012"));
 			messages.addAll(client.setField(client.getField("birthDate"), "04/10/2011"));
-			System.out.println(client);
+			logger.info(client);
 			messages.addAll(client.setField(client.getField("firstName"), "Jeremy"));
-			System.out.println(client);
+			logger.info(client);
 			messages.addAll(client.setField(client.getField("firstName"), "1"));
-			System.out.println(client);
+			logger.info(client);
 			messages.addAll(client.setField(client.getField("age"), "500"));
-			System.out.println(client);
+			logger.info(client);
+			messages.addAll(client.setField(client.getField("age"), null));
+			logger.info("Message tests completed.");
 		} catch (FieldExistsException e) {
-			System.out.println(e.getMessage());
+			logger.error(e);
 			return;
 		} catch (FieldNotFoundException e) {
 			messages.add(new Message(Message.Level.System, e.getMessage()));
 			if(e.getCause() != null){
 				messages.add(new Message(Message.Level.System, e.getMessage()));
 			}
+		} catch (Exception e){
+			logger.debug("Unknown error: ", e);
 		}
 
 		try {
@@ -70,10 +79,10 @@ public class Test {
 		} catch (FieldExistsException e) {
 			messages.add(new Message(Message.Level.System, e.getMessage()));
 		}
-		
-		System.out.println("\nERRORS");
+
+		logger.info("ERRORS");
 		for(Message message : messages){
-			System.out.println("\n" + message.toJson());
+			logger.info(message.toJson());
 		}
 	}
 

@@ -19,5 +19,5 @@ import com.nawf.client.Message;
 
 
 public interface Validator<T> {
-	public void validate(List<Message> errors, T value) throws FieldValidationException;
+	public void validate(List<Message> errors, T value, Boolean overriden) throws FieldValidationException;
 }

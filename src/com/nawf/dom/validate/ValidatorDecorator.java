@@ -31,22 +31,32 @@ public class ValidatorDecorator<T> implements Validator<T>{
 		this.validator = validatorDecorator;
 	}
 
-	public final void validate(List<Message> messages, T value) throws FieldValidationException{
-		Message message = null;
+	public final void validate(List<Message> messages, T value, Boolean overriden) throws FieldValidationException{
+
 		if(this.validationRule.isPre()){
-			message = this.validationRule.validate(value);
-			if(message != null){
-				messages.add(message);
-			}
+			doValidation(messages, value, overriden);
 		}
 
-		this.validator.validate(messages, value);
+		this.validator.validate(messages, value, overriden);
 
 		if(this.validationRule.isPost()){
-			message = this.validationRule.validate(value);
-			if(message != null){
-				messages.add(message);
+			doValidation(messages, value, overriden);
+		}
+
+	}
+	
+	private void doValidation(List<Message> messages, T value, Boolean overriden) throws FieldValidationException{
+		Message message = null;
+		if(this.validationRule.isOverrideable()){
+			if(!overriden){
+				message = this.validationRule.validate(value);
 			}
+		}else{
+			message = this.validationRule.validate(value);
+
+		}
+		if(message != null){
+			messages.add(message);
 		}
 	}
 

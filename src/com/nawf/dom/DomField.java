@@ -39,7 +39,13 @@ public final class DomField<T> implements Field {
 		}
 		this.name = name;
 		this.value = value;
+		if(parser == null){
+			throw new NullPointerException("DomField object must have a valid parser.");
+		}
 		this.parser = parser;
+		if(formatter == null){
+			throw new NullPointerException("DomField object must have a valid formatter.");
+		}
 		this.formatter = formatter;
 	}
 
@@ -48,22 +54,32 @@ public final class DomField<T> implements Field {
 	}
 
 	protected final void setValue(String value) throws FieldParseException{
-		this.value = this.parser.parse(value);
+		this.value = this.parse(value);
 	}
 
 	public final String getValue(){
 		return this.formatter.format(this.value);
 	}
+	
+	public T parse(String value) throws FieldParseException{
+		if(value == null || value.trim().isEmpty()){
+			return null;
+		}
+		return this.parser.parse(value);
+	}
 
-	public final List<Message> validate(String value){
+	public final List<Message> validate(String value, Boolean override){
 		List<Message> messages = new ArrayList<Message>();
 		try{
-			T tValue = this.parser.parse(value);
-			this.validator.validate(messages, tValue);
+			T tValue = this.parse(value);
+			this.validator.validate(messages, tValue, override);
 		}catch(FieldParseException fpe){
 			messages.add(new Message(Message.Level.Error, fpe.getMessage()));
 		} catch (FieldValidationException fve) {
 			messages.add(new Message(Message.Level.Error, fve.getMessage()));
+		}
+		for(Message message : messages){
+			message.setFieldName(this.name);
 		}
 		return messages;
 	}

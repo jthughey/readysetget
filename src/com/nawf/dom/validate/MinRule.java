@@ -29,11 +29,13 @@ public class MinRule extends ValidationRule<Integer> {
 
 	@Override
 	public Message validate(Integer value) throws FieldValidationException {
-		if(value < min){
-			return new Message(Message.Level.Error, MessageUtil.format(" must be larger than or equal to {0}.", min));
-		}
-		if(!this.isInclusive && value == min){
-			return new Message(Message.Level.Error, MessageUtil.format(" must be larger than {0}.", min));
+		if(value != null){
+			if(value < min){
+				return new Message(Message.Level.Error, MessageUtil.format(" must be larger than or equal to {0}.", min));
+			}
+			if(!this.isInclusive && value == min){
+				return new Message(Message.Level.Error, MessageUtil.format(" must be larger than {0}.", min));
+			}
 		}
 		return null;
 	}

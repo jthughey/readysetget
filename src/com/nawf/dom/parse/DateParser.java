@@ -21,17 +21,26 @@ import java.util.Date;
 public class DateParser implements Parser<Date>{
 	public static final String MMDDYYYY_DATE_FORMAT = "MM/dd/yyyy";
 	public static final String DDMMYYYY_DATE_FORMAT = "dd/MM/yyyy";
-	private SimpleDateFormat sdf = new SimpleDateFormat(MMDDYYYY_DATE_FORMAT);
+	private SimpleDateFormat sdf = null;
+
+	public DateParser(){
+		setDateFormat(MMDDYYYY_DATE_FORMAT);
+	}
 
 	public DateParser(String dateFormat){
+		setDateFormat(dateFormat);
+	}
+
+	public void setDateFormat(String dateFormat){
 		this.sdf = new SimpleDateFormat(dateFormat);
 	}
+
 	
 	public Date parse(String value) throws FieldParseException {
 		try {
 			return sdf.parse(value);
 		} catch (ParseException pe) {
-			throw new FieldParseException(pe, "\"{0}\" is not a valid date, application date format is {1}.", value, MMDDYYYY_DATE_FORMAT);
+			throw new FieldParseException(pe, "\"{0}\" is not a valid date, date format should be {1}.", value, MMDDYYYY_DATE_FORMAT);
 		}
 	}	
 }

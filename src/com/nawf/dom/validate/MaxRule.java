@@ -29,11 +29,13 @@ public class MaxRule extends ValidationRule<Integer> {
 
 	@Override
 	public Message validate(Integer value) throws FieldValidationException {
-		if(value > max){
-			return new Message(Message.Level.Error, MessageUtil.format(" must be less than or equal to {0}.", max));
-		}
-		if(!this.isInclusive && value == max){
-			return new Message(Message.Level.Error, MessageUtil.format(" must be less than {0}.", max));
+		if(value != null){
+			if(value > max){
+				return new Message(Message.Level.Error, MessageUtil.format(" must be less than or equal to {0}.", max));
+			}
+			if(!this.isInclusive && value == max){
+				return new Message(Message.Level.Error, MessageUtil.format(" must be less than {0}.", max));
+			}
 		}
 		return null;
 	}

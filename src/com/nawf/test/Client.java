@@ -29,6 +29,7 @@ import com.nawf.dom.parse.StringParser;
 import com.nawf.dom.validate.FieldValidationException;
 import com.nawf.dom.validate.MaxRule;
 import com.nawf.dom.validate.MinRule;
+import com.nawf.dom.validate.RequiredRule;
 import com.nawf.dom.validate.ValidationRule;
 import com.nawf.util.MessageUtil;
 
@@ -46,6 +47,7 @@ public class Client extends DomObject {
 											age,
 											new IntegerParser(),
 											new IntegerFormatter())
+											.addValidation(new RequiredRule<Integer>())
 											.addValidation(new MinRule(0, true))
 											.addValidation(new MaxRule(131, false)));
 
@@ -59,7 +61,7 @@ public class Client extends DomObject {
 	private class FirstNameRule extends ValidationRule<String>{
 
 		public FirstNameRule() {
-			super(ValidationRule.Position.Pre);
+			super(ValidationRule.Position.Pre, true);
 		}
 
 		@Override
@@ -75,14 +77,14 @@ public class Client extends DomObject {
 	private class BirthDateRule extends ValidationRule<Date>{
 
 		public BirthDateRule() {
-			super(ValidationRule.Position.Pre);
+			super(ValidationRule.Position.Pre, true);
 		}
 
 		@Override
 		public Message validate(Date value) throws FieldValidationException {
 			Calendar now = Calendar.getInstance();
 			if(now.getTime().before(value)){
-				return new Message(Message.Level.Error, "Birth date must be on or before today's date.");
+				return new Message(Message.Level.Error, " must be on or before today's date.");
 			}
 			return null;
 		}

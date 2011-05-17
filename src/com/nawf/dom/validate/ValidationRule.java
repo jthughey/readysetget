@@ -17,15 +17,22 @@ import com.nawf.client.Message;
 
 public abstract class ValidationRule<T>{
 
+	private Boolean overrideable = false;
+
 	private Position position = null;
 	public enum Position {Pre, Post}
 
 	public ValidationRule(Position position){
 		this.position = position;
 	}
+	
+	public ValidationRule(Position position, Boolean overrideable){
+		this(position);
+		this.overrideable = overrideable;
+	}
 
 	public ValidationRule() {
-		this.position = Position.Pre;
+		this(Position.Pre);
 	}
 
 	public Boolean isPre(){
@@ -34,6 +41,10 @@ public abstract class ValidationRule<T>{
 
 	public Boolean isPost(){
 		return Position.Post.equals(position);
+	}
+	
+	public Boolean isOverrideable(){
+		return this.overrideable;
 	}
 
 	public abstract Message validate(T value) throws FieldValidationException;
