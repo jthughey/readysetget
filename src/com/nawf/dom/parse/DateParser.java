@@ -40,7 +40,7 @@ public class DateParser implements Parser<Date>{
 		try {
 			return sdf.parse(value);
 		} catch (ParseException pe) {
-			throw new FieldParseException(pe, "\"{0}\" is not a valid date, date format should be {1}.", value, MMDDYYYY_DATE_FORMAT);
+			throw new FieldParseException(pe, "\"{0}\" is not a valid date, date format should be {1}.", value, this.sdf.toPattern());
 		}
 	}	
 }
