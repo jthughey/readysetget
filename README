@@ -1,0 +1,4 @@
+NAWF - Not Another Web Framework
+---------------------------------------
+The intent behind NAWF is to create a truly flexible web framework that encapsulates validation logic and object definition
+in a structured yet highly flexible manner all while keeping with Java's type-safety.
