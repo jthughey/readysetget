@@ -17,9 +17,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
-
 import com.nawf.client.Message;
 import com.nawf.dom.DomField;
 import com.nawf.dom.FieldExistsException;
@@ -28,35 +25,33 @@ import com.nawf.dom.format.IntegerFormatter;
 import com.nawf.dom.parse.IntegerParser;
 
 public class Test {
-	static Logger logger = Logger.getLogger(Test.class);
 	public static void main(String[] args) {
-		DOMConfigurator.configure("log4j.xml");
 
 		List<Message> messages = new ArrayList<Message>();
 		Client client = null;
 		try{
 			client = new Client("Justin", 29, new Date(System.currentTimeMillis()));
-			logger.info(client);
+			System.out.println(client);
 			messages.addAll(client.setField(client.getField("birthDate"), "12/07/1981"));
 			messages.addAll(client.setField(client.getField("birthDate"), "1a/07/1981"));
 			messages.addAll(client.setField(client.getField("birthDate"), "12/07/2012"));
 			messages.addAll(client.setField(client.getField("birthDate"), "04/10/2011"));
-			logger.info(client);
+			System.out.println(client);
 			messages.addAll(client.setField(client.getField("firstName"), "Jeremy"));
-			logger.info(client);
+			System.out.println(client);
 			messages.addAll(client.setField(client.getField("firstName"), "1"));
-			logger.info(client);
+			System.out.println(client);
 			messages.addAll(client.setField(client.getField("age"), "500"));
-			logger.info(client);
+			System.out.println(client);
 			messages.addAll(client.setField(client.getField("age"), null));
-			logger.info(client);
+			System.out.println(client);
 			messages.addAll(client.setField(client.getField("age"), "-1"));
-			logger.info(client);
+			System.out.println(client);
 //need to figure out how to uniquely identify a validation rule on a field and override it
 			//messages.addAll(client.setField(client.getField("age"), "-1", true));
-			logger.info("Message tests completed.");
+			System.out.println("Message tests completed.");
 		} catch (FieldExistsException e) {
-			logger.error(e);
+			System.err.println(e);
 			return;
 		} catch (FieldNotFoundException e) {
 			messages.add(new Message(Message.Level.System, e.getMessage()));
@@ -64,7 +59,7 @@ public class Test {
 				messages.add(new Message(Message.Level.System, e.getMessage()));
 			}
 		} catch (Exception e){
-			logger.debug("Unknown error: ", e);
+			System.err.println("Unknown error: "+String.valueOf(e));
 		}
 
 		try {
@@ -85,9 +80,9 @@ public class Test {
 			messages.add(new Message(Message.Level.System, e.getMessage()));
 		}
 
-		logger.info("ERRORS");
+		System.out.println("ERRORS");
 		for(Message message : messages){
-			logger.info(message);
+			System.out.println(message);
 		}
 	}
 

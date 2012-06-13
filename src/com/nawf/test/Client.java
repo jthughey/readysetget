@@ -48,7 +48,7 @@ public class Client extends DomObject {
 											new IntegerParser(),
 											new IntegerFormatter())
 											.addValidation(new RequiredRule<Integer>())
-											.addValidation(new MinRule(0, true, ValidationRule.Position.Before, true))
+											.addValidation(new MinRule(0, true))
 											.addValidation(new MaxRule(131, false)));
 
 		this.addField(new DomField<Date>("birthDate", 
