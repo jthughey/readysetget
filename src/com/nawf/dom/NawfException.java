@@ -15,7 +15,7 @@ package com.nawf.dom;
 */
 import com.nawf.util.MessageUtil;
 
-public abstract class NawfException extends Exception {
+public class NawfException extends Exception {
 
 	private static final long serialVersionUID = 7650622573789602226L;
 	private String message = null;

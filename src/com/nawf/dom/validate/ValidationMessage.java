@@ -21,7 +21,7 @@ public class ValidationMessage extends Message {
 	}
 
 	public String toJson(){
-		return "{\"rule\":\""+ruleId+"\",\"level\":\""+this.getLevel()+"\",\"message\":\""+this.getMessage()+"\"}";
+		return "{\"rule\":\""+ruleId+"\",\"message\":"+super.toJson()+"}";
 	}
 	
 	public String toString(){

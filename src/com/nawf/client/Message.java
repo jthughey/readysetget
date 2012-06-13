@@ -32,7 +32,11 @@ public class Message{
 		return this.message;
 	}
 	
+	public String toJson(){
+		return "{\"level\":\""+this.getLevel()+"\",\"message\":\""+this.getMessage()+"\"}";
+	}
+	
 	public String toString(){
-		return this.message + ':'+this.level;
+		return this.toJson();
 	}
 }

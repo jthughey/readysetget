@@ -19,6 +19,7 @@ import java.util.Set;
 import com.nawf.client.Message;
 
 
+
 //TODO: Add concept of "overrides" which allow a user to override a select validation rule.
 
 public class ValidatorDecorator<T> implements Validator<T>{
@@ -37,6 +38,9 @@ public class ValidatorDecorator<T> implements Validator<T>{
 			//Onto the next rule.
 			this.validator.validate(messages, value, overriddenRuleIds);
 		}else{
+			if(overriddenRuleIds.contains(this.validationRule.getUniqueId())){
+				messages.add(new Message(Message.Level.System, "Attempted override of non-overrideable rule:"+this.validationRule.getUniqueId()));
+			}
 			if(this.validationRule.isPre()){
 				doValidation(messages, value);
 			}
