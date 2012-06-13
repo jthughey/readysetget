@@ -14,6 +14,7 @@ package com.nawf.dom.validate;
 *  limitations under the License.
 */
 import java.util.List;
+import java.util.Set;
 
 import com.nawf.client.Message;
 
@@ -22,7 +23,7 @@ public final class DefaultValidator<T> implements Validator<T>{
 	public DefaultValidator(){}
 
 	@Override
-	public final void validate(List<Message> errors, T value, Boolean overriden) throws FieldValidationException {
+	public final void validate(List<Message> errors, T value, Set<String> overridenRuleIds) throws FieldValidationException {
 		//Do nothing...
 	}
 }

@@ -27,7 +27,7 @@ public class DefaultValidationRule<T> extends ValidationRule<T> {
 	}
 
 	@Override
-	public Message validate(T value) throws FieldValidationException {
+	public Message runValidation(T value) throws FieldValidationException {
 		// TODO Auto-generated method stub
 		return null;
 	}

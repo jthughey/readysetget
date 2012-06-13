@@ -16,7 +16,6 @@ package com.nawf.client;
 public class Message{
 	private String message = null;
 	private Level level = null;
-	private String fieldName = null;
 
 	public enum Level {Info, Warning, Error, System}
 
@@ -25,15 +24,15 @@ public class Message{
 		this.message = message;
 	}
 	
-	public Message(Level level, String message, String id){
-		this(level, message);
+	public Level getLevel(){
+		return this.level;
 	}
 	
-	public void setFieldName(String fieldName){
-		this.fieldName = fieldName;
+	public String getMessage(){
+		return this.message;
 	}
 	
 	public String toString(){
-		return this.message + ':'+this.level+':'+this.fieldName;
+		return this.message + ':'+this.level;
 	}
 }

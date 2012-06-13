@@ -15,6 +15,7 @@ package com.nawf.dom;
 */
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.nawf.client.Message;
 import com.nawf.dom.format.Formatter;
@@ -68,18 +69,15 @@ public final class DomField<T> implements Field {
 		return this.parser.parse(value);
 	}
 
-	public final List<Message> validate(String value, Boolean override){
+	public final List<Message> validate(String value, Set<String> overridenRuleIds){
 		List<Message> messages = new ArrayList<Message>();
 		try{
 			T tValue = this.parse(value);
-			this.validator.validate(messages, tValue, override);
+			this.validator.validate(messages, tValue, overridenRuleIds);
 		}catch(FieldParseException fpe){
 			messages.add(new Message(Message.Level.Error, fpe.getMessage()));
 		} catch (FieldValidationException fve) {
 			messages.add(new Message(Message.Level.Error, fve.getMessage()));
-		}
-		for(Message message : messages){
-			message.setFieldName(this.name);
 		}
 		return messages;
 	}

@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nawf.client.Message;
 import com.nawf.dom.parse.FieldParseException;
@@ -57,14 +58,14 @@ public class DomObject {
 	}
 	
 	public final List<Message> setField(DomField<?> field, String value) throws FieldNotFoundException{
-		return setField(field, value, false);
+		return setField(field, value, Collections.<String> emptySet());
 	}
 
-	public final List<Message> setField(DomField<?> field, String value, Boolean overrideValidation) throws FieldNotFoundException{
+	public final List<Message> setField(DomField<?> field, String value, Set<String> overriddenRuleIds) throws FieldNotFoundException{
 		if(this.fieldByName.containsValue(field)){
 			List<Message> messages = new ArrayList<Message>();
 			try{
-				messages.addAll(field.validate(value, overrideValidation));
+				messages.addAll(field.validate(value, overriddenRuleIds));
 				if(messages.isEmpty()){
 					field.setValue(value);
 				}

@@ -14,6 +14,7 @@ package com.nawf.dom.validate;
 *  limitations under the License.
 */
 import java.util.List;
+import java.util.Set;
 
 import com.nawf.client.Message;
 
@@ -31,30 +32,27 @@ public class ValidatorDecorator<T> implements Validator<T>{
 		this.validator = validatorDecorator;
 	}
 
-	public final void validate(List<Message> messages, T value, Boolean overriden) throws FieldValidationException{
+	public final void validate(List<Message> messages, T value, Set<String> overriddenRuleIds) throws FieldValidationException{
+		if(this.validationRule.isOverrideable() && overriddenRuleIds.contains(this.validationRule.getUniqueId())){
+			//Onto the next rule.
+			this.validator.validate(messages, value, overriddenRuleIds);
+		}else{
+			if(this.validationRule.isPre()){
+				doValidation(messages, value);
+			}
 
-		if(this.validationRule.isPre()){
-			doValidation(messages, value, overriden);
-		}
+			this.validator.validate(messages, value, overriddenRuleIds);
 
-		this.validator.validate(messages, value, overriden);
-
-		if(this.validationRule.isPost()){
-			doValidation(messages, value, overriden);
+			if(this.validationRule.isPost()){
+				doValidation(messages, value);
+			}
 		}
 
 	}
-	
-	private void doValidation(List<Message> messages, T value, Boolean overriden) throws FieldValidationException{
-		Message message = null;
-		if(this.validationRule.isOverrideable()){
-			if(!overriden){
-				message = this.validationRule.validate(value);
-			}
-		}else{
-			message = this.validationRule.validate(value);
 
-		}
+	private void doValidation(List<Message> messages, T value) throws FieldValidationException{
+		Message message = null;
+		message = this.validationRule.validate(value);
 		if(message != null){
 			messages.add(message);
 		}

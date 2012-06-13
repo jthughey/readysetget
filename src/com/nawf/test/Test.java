@@ -29,6 +29,7 @@ public class Test {
 
 		List<Message> messages = new ArrayList<Message>();
 		Client client = null;
+
 		try{
 			client = new Client("Justin", 29, new Date(System.currentTimeMillis()));
 			System.out.println(client);

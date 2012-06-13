@@ -13,17 +13,25 @@ package com.nawf.dom.validate;
 *  See the License for the specific language governing permissions and
 *  limitations under the License.
 */ 
+import java.util.UUID;
+
 import com.nawf.client.Message;
 
 public abstract class ValidationRule<T>{
 
 	private Boolean overrideable = false;
+	
+	private UUID uniqueId = UUID.randomUUID();
 
 	private Position position = null;
 	public enum Position {Before, After}
 
 	public ValidationRule(Position position){
 		this.position = position;
+	}
+	
+	public String getUniqueId(){
+		return String.valueOf(uniqueId);
 	}
 	
 	public ValidationRule(Position position, Boolean overrideable){
@@ -47,5 +55,13 @@ public abstract class ValidationRule<T>{
 		return this.overrideable;
 	}
 	
-	public abstract Message validate(T value) throws FieldValidationException;
+	public ValidationMessage validate(T value) throws FieldValidationException{
+		Message msg = runValidation(value);
+		if(msg != null){
+			return new ValidationMessage(msg, this.getUniqueId());
+		}
+		return null;
+	}
+	
+	public abstract Message runValidation(T value) throws FieldValidationException;
 }

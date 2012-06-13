@@ -13,9 +13,11 @@ package com.nawf.client;
 *  See the License for the specific language governing permissions and
 *  limitations under the License.
 */
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nawf.dom.DomField;
 
@@ -44,11 +46,11 @@ public class PageField<T>{
 	}
 	
 	public List<Message> validate(){
-		return this.validate(false);
+		return this.validate(Collections.<String> emptySet());
 	}
 	
-	public List<Message> validate(Boolean override){
-		return this.field.validate(this.value, override);
+	public List<Message> validate(Set<String> overriddenRuleIds){
+		return this.field.validate(this.value, overriddenRuleIds);
 	}
 	
 	public String getId(){

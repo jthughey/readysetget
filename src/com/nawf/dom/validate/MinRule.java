@@ -28,7 +28,7 @@ public class MinRule extends ValidationRule<Integer> {
 	}
 
 	@Override
-	public Message validate(Integer value) throws FieldValidationException {
+	public Message runValidation(Integer value) throws FieldValidationException {
 		if(value != null){
 			if(value < min){
 				return new Message(Message.Level.Error, MessageUtil.format(" must be larger than or equal to {0}.", min));

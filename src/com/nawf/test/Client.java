@@ -65,7 +65,7 @@ public class Client extends DomObject {
 		}
 
 		@Override
-		public Message validate(String value)
+		public Message runValidation(String value)
 		throws FieldValidationException {
 			if("1".equals(value)){
 				return new Message(Message.Level.Error, MessageUtil.format("{0} is not a valid first name.", value));
@@ -81,7 +81,7 @@ public class Client extends DomObject {
 		}
 
 		@Override
-		public Message validate(Date value) throws FieldValidationException {
+		public Message runValidation(Date value) throws FieldValidationException {
 			Calendar now = Calendar.getInstance();
 			if(now.getTime().before(value)){
 				return new Message(Message.Level.Error, " must be on or before today's date.");
