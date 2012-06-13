@@ -22,7 +22,7 @@ public class MaxRule extends ValidationRule<Integer> {
 	private Boolean isInclusive = false;
 
 	public MaxRule(Integer max, Boolean isInclusive){
-		super(ValidationRule.Position.Pre);
+		super(ValidationRule.Position.Before);
 		this.max = max;
 		this.isInclusive = isInclusive;
 	}

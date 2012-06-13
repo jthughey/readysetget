@@ -23,7 +23,7 @@ public class DefaultValidationRule<T> extends ValidationRule<T> {
 	}
 	
 	public DefaultValidationRule(){
-		super(ValidationRule.Position.Pre);
+		super(ValidationRule.Position.Before);
 	}
 
 	@Override

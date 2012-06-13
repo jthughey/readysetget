@@ -20,7 +20,7 @@ public abstract class ValidationRule<T>{
 	private Boolean overrideable = false;
 
 	private Position position = null;
-	public enum Position {Pre, Post}
+	public enum Position {Before, After}
 
 	public ValidationRule(Position position){
 		this.position = position;
@@ -32,20 +32,20 @@ public abstract class ValidationRule<T>{
 	}
 
 	public ValidationRule() {
-		this(Position.Pre);
+		this(Position.Before);
 	}
 
 	public Boolean isPre(){
-		return Position.Pre.equals(position);
+		return Position.Before.equals(position);
 	}
 
 	public Boolean isPost(){
-		return Position.Post.equals(position);
+		return Position.After.equals(position);
 	}
 	
 	public Boolean isOverrideable(){
 		return this.overrideable;
 	}
-
+	
 	public abstract Message validate(T value) throws FieldValidationException;
 }

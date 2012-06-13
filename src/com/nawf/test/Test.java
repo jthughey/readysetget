@@ -49,6 +49,11 @@ public class Test {
 			messages.addAll(client.setField(client.getField("age"), "500"));
 			logger.info(client);
 			messages.addAll(client.setField(client.getField("age"), null));
+			logger.info(client);
+			messages.addAll(client.setField(client.getField("age"), "-1"));
+			logger.info(client);
+//need to figure out how to uniquely identify a validation rule on a field and override it
+			//messages.addAll(client.setField(client.getField("age"), "-1", true));
 			logger.info("Message tests completed.");
 		} catch (FieldExistsException e) {
 			logger.error(e);
@@ -82,7 +87,7 @@ public class Test {
 
 		logger.info("ERRORS");
 		for(Message message : messages){
-			logger.info(message.toJson());
+			logger.info(message);
 		}
 	}
 

@@ -13,7 +13,7 @@ package com.nawf.client;
 *  See the License for the specific language governing permissions and
 *  limitations under the License.
 */
-public class Message implements Jsonable{
+public class Message{
 	private String message = null;
 	private Level level = null;
 	private String fieldName = null;
@@ -32,26 +32,8 @@ public class Message implements Jsonable{
 	public void setFieldName(String fieldName){
 		this.fieldName = fieldName;
 	}
-
-	public String toJson(){
-		StringBuilder sb = new StringBuilder();
-		sb.append("{")
-		  .append("\"fieldName\"")
-		  .append(":")
-		  .append("\"")
-		  .append(this.fieldName)
-		  .append("\",")
-		  .append("\"level\"")
-		  .append(":")
-		  .append("\"")
-		  .append(this.level)
-		  .append("\",")
-		  .append("\"message\"")
-		  .append(":")
-		  .append("\"")
-		  .append(this.message)
-		  .append("\"")
-		  .append("}");
-		return sb.toString();
+	
+	public String toString(){
+		return this.message + ':'+this.level+':'+this.fieldName;
 	}
 }

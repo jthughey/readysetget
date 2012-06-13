@@ -48,7 +48,7 @@ public class Client extends DomObject {
 											new IntegerParser(),
 											new IntegerFormatter())
 											.addValidation(new RequiredRule<Integer>())
-											.addValidation(new MinRule(0, true))
+											.addValidation(new MinRule(0, true, ValidationRule.Position.Before, true))
 											.addValidation(new MaxRule(131, false)));
 
 		this.addField(new DomField<Date>("birthDate", 
@@ -61,7 +61,7 @@ public class Client extends DomObject {
 	private class FirstNameRule extends ValidationRule<String>{
 
 		public FirstNameRule() {
-			super(ValidationRule.Position.Pre, true);
+			super(ValidationRule.Position.Before, true);
 		}
 
 		@Override
@@ -77,7 +77,7 @@ public class Client extends DomObject {
 	private class BirthDateRule extends ValidationRule<Date>{
 
 		public BirthDateRule() {
-			super(ValidationRule.Position.Pre, true);
+			super(ValidationRule.Position.Before, true);
 		}
 
 		@Override

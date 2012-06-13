@@ -22,7 +22,7 @@ public class MinRule extends ValidationRule<Integer> {
 	private Boolean isInclusive = false;
 
 	public MinRule(Integer min, Boolean isInclusive){
-		super(ValidationRule.Position.Pre);
+		super(ValidationRule.Position.Before);
 		this.min = min;
 		this.isInclusive = isInclusive;
 	}
